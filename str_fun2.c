@@ -13,6 +13,7 @@ int _strncmp(const char *s1, const char *s2, size_t n);
  * Return: If c is found - pointer to the first occurence.
  *         If c is not found - NULL.
  */
+
 char *_strchr(char *s, char c)
 {
 	int index;
@@ -34,6 +35,7 @@ char *_strchr(char *s, char c)
  * Return: Number of bytes in s which
  *         consist only of bytes from accept.
  */
+
 int _strspn(char *s, char *accept)
 {
 	int bytes = 0;
@@ -63,6 +65,7 @@ int _strspn(char *s, char *accept)
  *         0 if s1 = s2
  *         Negative byte difference if s1 < s2
  */
+
 int _strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
@@ -87,6 +90,7 @@ int _strcmp(char *s1, char *s2)
  *         0 if s1 and s2 match.
  *         Greater than 0 if s1 is longer than s2.
  */
+
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t i;

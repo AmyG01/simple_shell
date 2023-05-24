@@ -12,11 +12,12 @@ void logical_ops(char *line, ssize_t *new_len);
  * Description: Spaces are inserted to separate ";", "||", and "&&".
  *              Replaces "#" with '\0'.
  */
+
 void handle_line(char **line, ssize_t read)
 {
 	char *old_line, *new_line;
 	char previous, current, next;
-	size_t a, x;
+	size_t i, j;
 	ssize_t new_len;
 
 	new_len = get_new_len(*line);
@@ -25,71 +26,71 @@ void handle_line(char **line, ssize_t read)
 	new_line = malloc(new_len + 1);
 	if (!new_line)
 		return;
-	x = 0;
+	j = 0;
 	old_line = *line;
-	for (a = 0; old_line[a]; a++)
+	for (i = 0; old_line[i]; i++)
 	{
-		current = old_line[a];
-		next = old_line[a + 1];
-		if (a != 0)
+		current = old_line[i];
+		next = old_line[i + 1];
+		if (i != 0)
 		{
-			previous = old_line[a - 1];
+			previous = old_line[i - 1];
 			if (current == ';')
 			{
 				if (next == ';' && previous != ' ' && previous != ';')
 				{
-					new_line[x++] = ' ';
-					new_line[x++] = ';';
+					new_line[j++] = ' ';
+					new_line[j++] = ';';
 					continue;
 				}
 				else if (previous == ';' && next != ' ')
 				{
-					new_line[x++] = ';';
-					new_line[x++] = ' ';
+					new_line[j++] = ';';
+					new_line[j++] = ' ';
 					continue;
 				}
 				if (previous != ' ')
-					new_line[x++] = ' ';
-				new_line[x++] = ';';
+					new_line[j++] = ' ';
+				new_line[j++] = ';';
 				if (next != ' ')
-					new_line[x++] = ' ';
+					new_line[j++] = ' ';
 				continue;
 			}
 			else if (current == '&')
 			{
 				if (next == '&' && previous != ' ')
-					new_line[x++] = ' ';
+					new_line[j++] = ' ';
 				else if (previous == '&' && next != ' ')
 				{
-					new_line[x++] = '&';
-					new_line[x++] = ' ';
+					new_line[j++] = '&';
+					new_line[j++] = ' ';
 					continue;
 				}
 			}
 			else if (current == '|')
 			{
 				if (next == '|' && previous != ' ')
-					new_line[x++]  = ' ';
+					new_line[j++]  = ' ';
 				else if (previous == '|' && next != ' ')
 				{
-					new_line[x++] = '|';
-					new_line[x++] = ' ';
+					new_line[j++] = '|';
+					new_line[j++] = ' ';
 					continue;
 				}
 			}
 		}
 		else if (current == ';')
 		{
-			if (a != 0 && old_line[a - 1] != ' ')
-				new_line[x++] = ' ';
-			new_line[x++] = ';';
+			if (i != 0 && old_line[i - 1] != ' ')
+				new_line[j++] = ' ';
+			new_line[j++] = ';';
 			if (next != ' ' && next != ';')
-				new_line[x++] = ' ';
+				new_line[j++] = ' ';
 			continue;
 		}
-		new_line[x++] = old_line[a];
+		new_line[j++] = old_line[i];
 	}
-	new_line[x] = '\0';
+	new_line[j] = '\0';
 
 	free(*line);
 	*line = new_line;
@@ -107,47 +108,47 @@ void handle_line(char **line, ssize_t read)
 
 ssize_t get_new_len(char *line)
 {
-	size_t a;
+	size_t i;
 	ssize_t new_len = 0;
 	char current, next;
 
-	for (a = 0; line[a]; a++)
+	for (i = 0; line[i]; i++)
 	{
-		current = line[a];
-		next = line[a + 1];
+		current = line[i];
+		next = line[i + 1];
 		if (current == '#')
 		{
-			if (a == 0 || line[a - 1] == ' ')
+			if (i == 0 || line[i - 1] == ' ')
 			{
-				line[a] = '\0';
+				line[i] = '\0';
 				break;
 			}
 		}
-		else if (a != 0)
+		else if (i != 0)
 		{
 			if (current == ';')
 			{
-				if (next == ';' && line[a - 1] != ' ' && line[a - 1] != ';')
+				if (next == ';' && line[i - 1] != ' ' && line[i - 1] != ';')
 				{
 					new_len += 2;
 					continue;
 				}
-				else if (line[a - 1] == ';' && next != ' ')
+				else if (line[i - 1] == ';' && next != ' ')
 				{
 					new_len += 2;
 					continue;
 				}
-				if (line[a - 1] != ' ')
+				if (line[i - 1] != ' ')
 					new_len++;
 				if (next != ' ')
 					new_len++;
 			}
 			else
-				logical_ops(&line[a], &new_len);
+				logical_ops(&line[i], &new_len);
 		}
 		else if (current == ';')
 		{
-			if (a != 0 && line[a - 1] != ' ')
+			if (i != 0 && line[i - 1] != ' ')
 				new_len++;
 			if (next != ' ' && next != ';')
 				new_len++;
@@ -156,11 +157,13 @@ ssize_t get_new_len(char *line)
 	}
 	return (new_len);
 }
+
 /**
  * logical_ops - Checks a line for logical operators "||" or "&&".
  * @line: Pointer to the character to check in the line.
  * @new_len: A pointer to new_len in get_new_len function.
  */
+
 void logical_ops(char *line, ssize_t *new_len)
 {
 	char previous, current, next;

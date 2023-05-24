@@ -7,6 +7,7 @@ int execute(char **args, char **front);
  * sig_handler - Prints a new prompt upon receiving a signal.
  * @sig: The signal.
  */
+
 void sig_handler(int sig)
 {
 	char *new_prompt = "\n$ ";
@@ -24,6 +25,7 @@ void sig_handler(int sig)
  * Return: If an error occurs - a corresponding error code.
  *         O/w - The exit value of the last executed command.
  */
+
 int execute(char **args, char **front)
 {
 	pid_t child_pid;
@@ -81,6 +83,7 @@ int execute(char **args, char **front)
  *
  * Return: The value of the last executed command.
  */
+
 int main(int argc, char *argv[])
 {
 	int ret = 0, retn;
