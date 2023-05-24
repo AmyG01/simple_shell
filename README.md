@@ -15,10 +15,10 @@ This particular file focuses on the process of analyzing the user input and brea
 helper files (helper.c, helpers_2.c & input_helpers.c):
 Typically, these files comprise utility functions that are employed throughout the codebase. They encompass commonly utilized functions such as string manipulation, memory management, or other auxiliary functions that aid in implementing the shell's functionality.
 
-linked_list.c:
+linkedlist.c:
 This particular file is responsible for the implementation of a data structure known as a linked list. It contains functions that facilitate the creation, modification, and traversal of linked lists. Linked lists are utilized within the shell to store and manage various data elements, such as command history or lists of environment variables.
 
-str_fun1.c & str_fun2.c:
+str_funcs1.c & str_funcs2.c:
 These files consist of functions that manipulate strings. They may encompass functions for performing common operations on strings, such as concatenation, comparison, tokenization, or any other string-related functionality that the shell requires.
 
 env_builtins.c:
